@@ -19,7 +19,13 @@ class AdaPotato(arcade.Sprite):
         self.center_y = WINDOW_HEIGHT/2
 
     def on_mousepress(self):
-        pass
+        count = 0
+        if self.texture ==ADA_IMAGE:
+            count += 1
+        else:
+            count -= 1
+            if count < 0:
+                count = 0
 
     def draw(self):
         pass
@@ -33,7 +39,6 @@ class AdaPotato(arcade.Sprite):
             elif self.texture == POTATO_IMAGE:
                 self.texture = ADA_IMAGE
                 self.timer = 0
-
 
 
 
@@ -51,6 +56,7 @@ class Window(arcade.Window):
         """ Called when it is time to draw the world """
         arcade.start_render()
         self.ada_potato.draw()
+        arcade.draw_text(color=(255,255,255), start_x=0, start_y=0, text="points: ")
 
     def on_update(self, delta_time):
         self.ada_potato.update()
