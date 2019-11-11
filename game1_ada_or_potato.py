@@ -61,7 +61,9 @@ class Window(arcade.Window):
         self.ada_potato.update()
 
     def on_mouse_press(self, x: float, y: float, button: int, modifiers: int):
-        self.ada_potato.mousepress()
+        for ada in self.ada_potato:
+            ada.mousepress()
+
 
 
 def main():
