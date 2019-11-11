@@ -6,7 +6,7 @@ BACKGROUND_COLOR = arcade.color.BLACK
 GAME_TITLE = "Ada Or Potato!"
 GAME_SPEED = 1/60
 ADA_IMAGE = arcade.load_texture("images/ada.png")
-POTATO_IMAGE = arcade.load_texture("images/potato.png")
+POTATO_IMAGE = arcade.load_texture("images/potato.png", scale = .2)
 
 
 class AdaPotato(arcade.Sprite):
@@ -32,7 +32,6 @@ class AdaPotato(arcade.Sprite):
 
     def update(self):
         self.timer += 1
-        print(self.score)
         if self.timer > 60:
             if self.texture == ADA_IMAGE:
                 self.texture = POTATO_IMAGE
@@ -42,7 +41,7 @@ class AdaPotato(arcade.Sprite):
                 self.timer = 0
 
 
-class Window(arcade.Window):
+class Window(arcade.Window, AdaPotato):
     def __init__(self):
         super().__init__(WINDOW_WIDTH, WINDOW_HEIGHT, GAME_TITLE)
         self.ada_potato = None
@@ -56,6 +55,7 @@ class Window(arcade.Window):
         """ Called when it is time to draw the world """
         arcade.start_render()
         self.ada_potato.draw()
+        arcade.draw_text("Score: " + str(self.ada_potato[0].score), 25, 25, arcade.color.WHITE, 14)
 
     def on_update(self, delta_time):
         self.ada_potato.update()
