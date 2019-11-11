@@ -8,24 +8,31 @@ GAME_SPEED = 1/60
 ADA_IMAGE = arcade.load_texture("images/ada.png")
 POTATO_IMAGE = arcade.load_texture("images/potato.png")
 
+
 class AdaPotato(arcade.Sprite):
     timer: int
+    score: int
 
     def __init__(self):
         super().__init__()
         self.texture = ADA_IMAGE
+        self.score = 0
         self.timer = 0
         self.center_x = WINDOW_WIDTH/2
         self.center_y = WINDOW_HEIGHT/2
 
-    def on_mousepress(self):
-        pass
+    def mousepress(self):
+        if self.texture == ADA_IMAGE:
+            self.score += 1
+        if self.texture == POTATO_IMAGE:
+            self.score -= 1
 
     def draw(self):
         pass
 
     def update(self):
         self.timer += 1
+        print(self.score)
         if self.timer > 60:
             if self.texture == ADA_IMAGE:
                 self.texture = POTATO_IMAGE
@@ -33,8 +40,6 @@ class AdaPotato(arcade.Sprite):
             elif self.texture == POTATO_IMAGE:
                 self.texture = ADA_IMAGE
                 self.timer = 0
-
-
 
 
 class Window(arcade.Window):
@@ -54,6 +59,10 @@ class Window(arcade.Window):
 
     def on_update(self, delta_time):
         self.ada_potato.update()
+
+    def on_mouse_press(self, x: float, y: float, button: int, modifiers: int):
+        self.ada_potato.mousepress()
+
 
 def main():
     window = Window()
